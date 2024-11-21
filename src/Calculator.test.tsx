@@ -1,7 +1,12 @@
 import React from 'react';
+import { render, screen } from '@testing-library/react';
+import Calculator from "./Calculator";
 
 describe('Calculator', () => {
   test('render container layout of a calculator with title calculator', () => {
+    render(<Calculator />);
+    expect(screen.getByText('Calculator'));
+
   });
 
   test('render entry screen for calculator', () => {
