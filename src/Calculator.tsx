@@ -7,6 +7,9 @@ function Calculator() {
           <div className="bg-blue-500 text-white p-4">
                 Calculator
           </div>
+          <div data-testid="calcDisplay" className="bg-gray-200 text-gray-900 rounded-lg p-4 text-right text-xl font-mono mb-4">
+              0
+          </div>
       </div>
   );
 }

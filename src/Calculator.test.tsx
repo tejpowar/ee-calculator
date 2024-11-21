@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import {getByTestId, render, screen} from '@testing-library/react';
 import Calculator from "./Calculator";
 
 describe('Calculator', () => {
@@ -9,7 +9,9 @@ describe('Calculator', () => {
 
   });
 
-  test('render entry screen for calculator', () => {
+  test('render 0 on the display', () => {
+    render((<Calculator />));
+    expect(screen.getByTestId('calcDisplay')).toHaveTextContent('0');
   });
 
   test('should display buttons with numbers', () => {
