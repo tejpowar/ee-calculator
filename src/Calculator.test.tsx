@@ -1,5 +1,5 @@
 import React from 'react';
-import {getByTestId, render, screen} from '@testing-library/react';
+import {fireEvent, getByTestId, render, screen} from '@testing-library/react';
 import Calculator from "./Calculator";
 
 describe('Calculator', () => {
@@ -24,11 +24,16 @@ describe('Calculator', () => {
     });
   });
 
-  test('have five operands shown on the screen', () => {
-
-  });
-
   test('should display the number clicked on the screen', () => {
+    render(<Calculator />);
+
+    const button7 = screen.getByText('7');
+
+    const display = screen.getByTestId('calcDisplay');
+
+    fireEvent.click(button7);
+
+    expect(display).toHaveTextContent('7');
 
   });
 
