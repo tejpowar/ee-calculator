@@ -5,17 +5,23 @@ import Calculator from "./Calculator";
 describe('Calculator', () => {
   test('render container layout of a calculator with title calculator', () => {
     render(<Calculator />);
-    expect(screen.getByText('Calculator'));
+    expect(screen.getByText('Calculator')).toBeInTheDocument();
 
   });
 
   test('render 0 on the display', () => {
     render((<Calculator />));
-    expect(screen.getByTestId('calcDisplay')).toHaveTextContent('0');
+    expect(screen.getByTestId('calcDisplay')).toHaveTextContent('1234');
   });
 
-  test('should display buttons with numbers', () => {
+  test('should display buttons with numbers and operands', () => {
+    const buttons = ['C', '±', '%', '÷', '7', '8', '9', '×', '4', '5', '6', '-', '1', '2', '3', '+', '0', '.', '='];
 
+    render(<Calculator />);
+    buttons.forEach((buttonText) => {
+      const button = screen.getByText(buttonText);
+      expect(button).toBeInTheDocument();
+    });
   });
 
   test('have five operands shown on the screen', () => {
@@ -26,12 +32,16 @@ describe('Calculator', () => {
 
   });
 
-  test('should add two numbers correctly', () => {});
+  test('should add two numbers correctly', () => {
+  });
 
-  test('should minus two numbers correctly', () => {});
+  test('should minus two numbers correctly', () => {
+  });
 
-  test('should divide two numbers correctly', () => {});
+  test('should divide two numbers correctly', () => {
+  });
 
-  test('should multiply two numbers correctly', () => {});
+  test('should multiply two numbers correctly', () => {
+  });
 
 });
