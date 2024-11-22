@@ -37,6 +37,18 @@ describe('Calculator', () => {
 
   });
 
+  test('should append the operator if 0 or a number is selected', () => {
+    render(<Calculator />);
+    const button7 = screen.getByText('7');
+    fireEvent.click(button7);
+    const multiplyButton =  screen.getByText('x');
+    fireEvent.click(multiplyButton);
+
+    const display = screen.getByTestId('calcDisplay');
+
+    expect(display).toHaveTextContent('7*');
+  });
+
   test('should add two numbers correctly', () => {
   });
 

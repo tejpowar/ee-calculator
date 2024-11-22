@@ -4,9 +4,19 @@ import './App.css';
 function Calculator() {
 
   const [display, setDisplay] = useState('0');
+  const [operator, setOperator] = useState('');
 
   const handleNumberClick = (buttonValue: string) => {
       setDisplay(buttonValue);
+  }
+
+  const handleOperatorClick  = (operator: string) => {
+        const currentValue = parseFloat(display);
+
+        if(operator) {
+            setOperator(operator);
+            setDisplay(`${currentValue}${operator}`);
+        }
   }
   return (
       <div className="container mx-auto p-4 bg-gray-100 rounded-lg shadow-md w-96">
@@ -32,9 +42,7 @@ function Calculator() {
                       {num}
                   </button>
               ))}
-              <button className="bg-orange-500 text-white rounded-lg py-3 text-lg font-medium">
-                  ×
-              </button>
+              <button className="bg-orange-500 text-white rounded-lg py-3 text-lg font-medium" onClick={()=> handleOperatorClick('*')}>x</button>
 
               <button className="bg-gray-200 text-gray-800 rounded-lg py-3 text-lg font-medium">4</button>
               <button className="bg-gray-200 text-gray-800 rounded-lg py-3 text-lg font-medium">5</button>
