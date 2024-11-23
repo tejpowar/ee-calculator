@@ -6,17 +6,15 @@ function Calculator() {
   const [display, setDisplay] = useState('0');
   const [operator, setOperator] = useState('');
 
-  const handleNumberClick = (buttonValue: string) => {
-      setDisplay(buttonValue);
+  const handleNumberClick = (number: string) => {
+      setDisplay(prev => prev === '0' ? number : prev  + number);
   }
 
-  const handleOperatorClick  = (operator: string) => {
-        const currentValue = parseFloat(display);
-
-        if(operator) {
-            setOperator(operator);
-            setDisplay(`${currentValue}${operator}`);
-        }
+  const handleOperatorClick  = (operatorInput: string) => {
+      if (display !== '0') {
+          setDisplay(prev => `${prev} ${operatorInput} `); // Append operator with spaces for readability
+          setOperator(operatorInput);
+      }
   }
   return (
       <div className="container mx-auto p-4 bg-gray-100 rounded-lg shadow-md w-96">
@@ -31,7 +29,7 @@ function Calculator() {
               <button className="bg-gray-300 text-gray-800 rounded-lg py-3 text-lg font-medium">C</button>
               <button className="bg-gray-300 text-gray-800 rounded-lg py-3 text-lg font-medium">±</button>
               <button className="bg-gray-300 text-gray-800 rounded-lg py-3 text-lg font-medium">%</button>
-              <button className="bg-orange-500 text-white rounded-lg py-3 text-lg font-medium">÷</button>
+              <button className="bg-orange-500 text-white rounded-lg py-3 text-lg font-medium" onClick={()=> handleOperatorClick('/')}>÷</button>
 
               {['7', '8', '9'].map((num) => (
                   <button
@@ -44,15 +42,27 @@ function Calculator() {
               ))}
               <button className="bg-orange-500 text-white rounded-lg py-3 text-lg font-medium" onClick={()=> handleOperatorClick('*')}>x</button>
 
-              <button className="bg-gray-200 text-gray-800 rounded-lg py-3 text-lg font-medium">4</button>
-              <button className="bg-gray-200 text-gray-800 rounded-lg py-3 text-lg font-medium">5</button>
-              <button className="bg-gray-200 text-gray-800 rounded-lg py-3 text-lg font-medium">6</button>
-              <button className="bg-orange-500 text-white rounded-lg py-3 text-lg font-medium">-</button>
+              {['4', '5', '6'].map((num) => (
+                  <button
+                      key={num}
+                      className="bg-gray-200 text-gray-800 rounded-lg py-3 text-lg font-medium"
+                      onClick={() => handleNumberClick(num)}
+                  >
+                      {num}
+                  </button>
+              ))}
+              <button className="bg-orange-500 text-white rounded-lg py-3 text-lg font-medium" onClick={()=> handleOperatorClick('-')}>-</button>
 
-              <button className="bg-gray-200 text-gray-800 rounded-lg py-3 text-lg font-medium">1</button>
-              <button className="bg-gray-200 text-gray-800 rounded-lg py-3 text-lg font-medium">2</button>
-              <button className="bg-gray-200 text-gray-800 rounded-lg py-3 text-lg font-medium">3</button>
-              <button className="bg-orange-500 text-white rounded-lg py-3 text-lg font-medium">+</button>
+              {['1', '2', '3'].map((num) => (
+                  <button
+                      key={num}
+                      className="bg-gray-200 text-gray-800 rounded-lg py-3 text-lg font-medium"
+                      onClick={() => handleNumberClick(num)}
+                  >
+                      {num}
+                  </button>
+              ))}
+              <button className="bg-orange-500 text-white rounded-lg py-3 text-lg font-medium"  onClick={()=> handleOperatorClick('+')}>+</button>
 
               <button className="col-span-2 bg-gray-200 text-gray-800 rounded-lg py-3 text-lg font-medium">0</button>
               <button className="bg-gray-200 text-gray-800 rounded-lg py-3 text-lg font-medium">.</button>

@@ -46,10 +46,25 @@ describe('Calculator', () => {
 
     const display = screen.getByTestId('calcDisplay');
 
-    expect(display).toHaveTextContent('7*');
+    expect(display).toHaveTextContent('7 *');
   });
 
-  test('should add two numbers correctly', () => {
+  test('should be able to display full calculation in display', () => {
+    render(<Calculator />);
+    const button7 = screen.getByText('7');
+    fireEvent.click(button7);
+    const multiplyButton =  screen.getByText('x');
+    fireEvent.click(multiplyButton);
+    const button2 = screen.getByText('2');
+    fireEvent.click(button2);
+
+    const display = screen.getByTestId('calcDisplay');
+
+    expect(display).toHaveTextContent('7 * 2');
+  });
+
+  test('should multiply two numbers correctly', () => {
+
   });
 
   test('should minus two numbers correctly', () => {
@@ -58,7 +73,7 @@ describe('Calculator', () => {
   test('should divide two numbers correctly', () => {
   });
 
-  test('should multiply two numbers correctly', () => {
+  test('should add two numbers correctly', () => {
   });
 
 });
