@@ -1,6 +1,7 @@
 import React from 'react';
-import {fireEvent, getByTestId, render, screen} from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 import Calculator from "./Calculator";
+import {calculate} from "./helpers/calculate";
 
 describe('Calculator', () => {
   test('render container layout of a calculator with title calculator', () => {
@@ -61,6 +62,14 @@ describe('Calculator', () => {
     const display = screen.getByTestId('calcDisplay');
 
     expect(display).toHaveTextContent('7 * 2');
+  });
+
+  test('should have a function to perform calculation', () => {
+    render(<Calculator />);
+
+    const result = calculate('5', '7', '*');
+
+    expect(result).toEqual('35');
   });
 
   test('should multiply two numbers correctly', () => {

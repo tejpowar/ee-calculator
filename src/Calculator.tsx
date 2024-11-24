@@ -5,17 +5,18 @@ function Calculator() {
 
   const [display, setDisplay] = useState('0');
   const [operator, setOperator] = useState('');
+  const [firstOperand, setFirstOperand] = useState('');
 
   const handleNumberClick = (number: string) => {
       setDisplay(prev => prev === '0' ? number : prev  + number);
   }
 
   const handleOperatorClick  = (operatorInput: string) => {
-      if (display !== '0') {
-          setDisplay(prev => `${prev} ${operatorInput} `); // Append operator with spaces for readability
-          setOperator(operatorInput);
-      }
+    setDisplay(prev => `${prev} ${operatorInput} `);
+    setFirstOperand(display);
+    setOperator(operatorInput);
   }
+
   return (
       <div className="container mx-auto p-4 bg-gray-100 rounded-lg shadow-md w-96">
           <div className="bg-blue-500 text-white p-4">
