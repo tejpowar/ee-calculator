@@ -74,8 +74,8 @@ describe('Calculator', () => {
 
   test('should perform a calculation automatically when entering number operator number', () => {
     render(<Calculator />);
-    const button7 = screen.getByText('8');
-    fireEvent.click(button7);
+    const button8 = screen.getByText('8');
+    fireEvent.click(button8);
     const multiplyButton =  screen.getByText('x');
     fireEvent.click(multiplyButton);
     const button2 = screen.getByText('2');
@@ -85,6 +85,23 @@ describe('Calculator', () => {
     const display = screen.getByTestId('calcDisplay');
 
     expect(display).toHaveTextContent('16 *');
+  });
+
+  test('should perform a calculation when pressing = button', () => {
+    render(<Calculator />);
+    const button8 = screen.getByText('8');
+    fireEvent.click(button8);
+    const multiplyButton =  screen.getByText('x');
+    fireEvent.click(multiplyButton);
+    const button2 = screen.getByText('2');
+    fireEvent.click(button2);
+
+    const equalButton = screen.getByTestId('equalButton');
+    fireEvent.click(equalButton);
+
+    const display = screen.getByTestId('calcDisplay');
+
+    expect(display).toHaveTextContent('16');
   });
 
   test('should multiply two numbers correctly', () => {
