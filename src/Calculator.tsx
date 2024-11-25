@@ -8,7 +8,27 @@ function Calculator() {
   const [operator, setOperator] = useState('');
   const [firstOperand, setFirstOperand] = useState('');
   const [isOperatorPressed, setIsOperatorPressed] = useState(false);
-    const [isPercentage, setIsPercentage] = useState(false);
+  const [isPercentage, setIsPercentage] = useState(false);
+
+  const handlePlusMinus = () => {
+    const parts = display.trim().split(' ');
+
+    if (parts.length === 1) {
+        const currentNumber = parts[0];
+        setDisplay(currentNumber.startsWith('-')
+            ? currentNumber.slice(1)
+            : `-${currentNumber}`);
+    } else if (parts.length === 3) {
+        const [firstPart, operator, secondPart] = parts;
+
+        if (secondPart) {
+            const newSecondPart = secondPart.startsWith('-')
+                ? secondPart.slice(1)
+                : `-${secondPart}`;
+            setDisplay(`${firstPart} ${operator} ${newSecondPart}`);
+        }
+    }
+  }
 
   const handleNumberClick = (number: string) => {
       if (isOperatorPressed) {
@@ -83,7 +103,7 @@ function Calculator() {
           </div>
           <div className="grid grid-cols-4 gap-3">
               <button data-testid="clearButton" className="bg-gray-300 text-gray-800 rounded-lg py-3 text-lg font-medium" onClick={() => {clearCalculator();}}>C</button>
-              <button className="bg-gray-300 text-gray-800 rounded-lg py-3 text-lg font-medium">±</button>
+              <button data-testid="plusMinusButton" className="bg-gray-300 text-gray-800 rounded-lg py-3 text-lg font-medium" onClick={() => handlePlusMinus()}>±</button>
               <button data-testid="percentageButton" className="bg-gray-300 text-gray-800 rounded-lg py-3 text-lg font-medium" onClick={()=> {handlePercentageClick()}}>%</button>
               <button className="bg-orange-500 text-white rounded-lg py-3 text-lg font-medium" onClick={()=> handleOperatorClick('/')}>÷</button>
 

@@ -213,5 +213,35 @@ describe('Calculator', () => {
     expect(clearedDisplay).toHaveTextContent('0');
   });
 
+  test('plus and minus must reflect on the display', () => {
+    render(<Calculator />);
+    const button8 = screen.getByText('8');
+    fireEvent.click(button8);
+    const plusMinusButton = screen.getByTestId('plusMinusButton');
+    fireEvent.click(plusMinusButton);
+    const display = screen.getByTestId('calcDisplay');
+    expect(display).toHaveTextContent('-8');
+    fireEvent.click(plusMinusButton);
+    const revertDisplay = screen.getByTestId('calcDisplay');
+    expect(revertDisplay).toHaveTextContent('8');
+  });
+
+  test('using minus should show correct calculation', () => {
+    render(<Calculator />);
+    const button8 = screen.getByText('8');
+    fireEvent.click(button8);
+    const plusMinusButton = screen.getByTestId('plusMinusButton');
+    fireEvent.click(plusMinusButton);
+    const display = screen.getByTestId('calcDisplay');
+    expect(display).toHaveTextContent('-8');
+    const multiplyButton =  screen.getByText('+');
+    fireEvent.click(multiplyButton);
+    const button2 = screen.getByText('2');
+    fireEvent.click(button2);
+    const equalButton = screen.getByTestId('equalButton');
+    fireEvent.click(equalButton);
+    const calcDisplay = screen.getByTestId('calcDisplay');
+    expect(calcDisplay).toHaveTextContent('-6');
+  });
 
 });

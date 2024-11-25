@@ -20,5 +20,5 @@ export const calculate = (firstOperand: string, secondOperand: string, operator:
             result = 0;
     }
 
-    return result.toString(); // Return result as a string to match calculator display
+    return result.toString();
 };
