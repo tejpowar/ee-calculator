@@ -20,5 +20,6 @@ export const calculate = (firstOperand: string, secondOperand: string, operator:
             result = 0;
     }
 
+    console.log("rsults", result);
     return result.toString(); // Return result as a string to match calculator display
 };

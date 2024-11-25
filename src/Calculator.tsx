@@ -1,20 +1,36 @@
 import React, {useState} from 'react';
 import './App.css';
+import {calculate} from "./helpers/calculate";
 
 function Calculator() {
 
   const [display, setDisplay] = useState('0');
   const [operator, setOperator] = useState('');
   const [firstOperand, setFirstOperand] = useState('');
+  const [isOperatorPressed, setIsOperatorPressed] = useState(false);
 
   const handleNumberClick = (number: string) => {
-      setDisplay(prev => prev === '0' ? number : prev  + number);
+      if (isOperatorPressed) {
+          setDisplay((prev) => `${prev}${number}`);
+          setIsOperatorPressed(false); // Reset operator press flag
+      } else {
+          setDisplay((prev) => (prev === '0' ? number : prev + number));
+      }
   }
 
   const handleOperatorClick  = (operatorInput: string) => {
-    setDisplay(prev => `${prev} ${operatorInput} `);
-    setFirstOperand(display);
-    setOperator(operatorInput);
+      if (firstOperand && operator && !isOperatorPressed) {
+          const currentNumber = display.trim().split(' ')[2];
+          const result = calculate(firstOperand, currentNumber, operator);
+          setDisplay(`${result} ${operatorInput} `);
+          setFirstOperand(result.toString());
+      } else if (!firstOperand) {
+          setFirstOperand(display);
+          setDisplay(`${display} ${operatorInput} `);
+      }
+
+      setOperator(operatorInput);
+      setIsOperatorPressed(true);
   }
 
   return (
