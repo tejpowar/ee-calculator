@@ -173,4 +173,16 @@ describe('Calculator', () => {
     expect(display).toHaveTextContent('10');
   });
 
+  test('should clear display when pressing C', () => {
+    render(<Calculator />);
+    const clearButton = screen.getByTestId('clearbutton');
+    const button8 = screen.getByText('8');
+    fireEvent.click(button8);
+    const display = screen.getByTestId('calcDisplay');
+    expect(display).toHaveTextContent('8');
+
+    fireEvent.click(clearButton);
+    const clearedDisplay = screen.getByTestId('calcDisplay');
+    expect(clearedDisplay).toHaveTextContent('0');
+  });
 });

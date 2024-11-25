@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import './App.css';
 import {calculate} from "./helpers/calculate";
+import {render} from "@testing-library/react";
 
 function Calculator() {
 
@@ -42,8 +43,15 @@ function Calculator() {
           setFirstOperand('');
           setIsOperatorPressed(false);
       }
-
   }
+
+  const clearCalculator = ()=> {
+      setDisplay('0');
+      setOperator('');
+      setFirstOperand('');
+      setIsOperatorPressed(false);
+  }
+
   return (
       <div className="container mx-auto p-4 bg-gray-100 rounded-lg shadow-md w-96">
           <div className="bg-blue-500 text-white p-4">
@@ -54,7 +62,7 @@ function Calculator() {
               {display}
           </div>
           <div className="grid grid-cols-4 gap-3">
-              <button className="bg-gray-300 text-gray-800 rounded-lg py-3 text-lg font-medium">C</button>
+              <button data-testid="clearbutton" className="bg-gray-300 text-gray-800 rounded-lg py-3 text-lg font-medium" onClick={() => {clearCalculator();}}>C</button>
               <button className="bg-gray-300 text-gray-800 rounded-lg py-3 text-lg font-medium">±</button>
               <button className="bg-gray-300 text-gray-800 rounded-lg py-3 text-lg font-medium">%</button>
               <button className="bg-orange-500 text-white rounded-lg py-3 text-lg font-medium" onClick={()=> handleOperatorClick('/')}>÷</button>
