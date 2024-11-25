@@ -173,9 +173,36 @@ describe('Calculator', () => {
     expect(display).toHaveTextContent('10');
   });
 
+  test('should calculate percentages', () => {
+    render(<Calculator />);
+    const button8 = screen.getByText('8');
+    fireEvent.click(button8);
+    const multiplyButton =  screen.getByText('+');
+    fireEvent.click(multiplyButton);
+    const button1 = screen.getByText('1');
+    fireEvent.click(button1);
+    const button0 = screen.getByText('0');
+    fireEvent.click(button0);
+
+    const percentageButton = screen.getByTestId('percentageButton');
+    fireEvent.click(percentageButton);
+
+    const display = screen.getByTestId('calcDisplay');
+
+    expect(display).toHaveTextContent('8 + 10%');
+
+    const equalButton = screen.getByTestId('equalButton');
+    fireEvent.click(equalButton);
+
+    const resultDisplay = screen.getByTestId('calcDisplay');
+
+    expect(resultDisplay).toHaveTextContent('8.8');
+
+  });
+
   test('should clear display when pressing C', () => {
     render(<Calculator />);
-    const clearButton = screen.getByTestId('clearbutton');
+    const clearButton = screen.getByTestId('clearButton');
     const button8 = screen.getByText('8');
     fireEvent.click(button8);
     const display = screen.getByTestId('calcDisplay');
@@ -185,4 +212,6 @@ describe('Calculator', () => {
     const clearedDisplay = screen.getByTestId('calcDisplay');
     expect(clearedDisplay).toHaveTextContent('0');
   });
+
+
 });
