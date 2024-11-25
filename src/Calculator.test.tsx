@@ -12,16 +12,17 @@ describe('Calculator', () => {
 
   test('render 0 on the display', () => {
     render((<Calculator />));
-    expect(screen.getByTestId('calcDisplay')).toHaveTextContent('1234');
+    expect(screen.getByTestId('calcDisplay')).toHaveTextContent('0');
   });
 
   test('should display buttons with numbers and operands', () => {
-    const buttons = ['C', '±', '%', '÷', '7', '8', '9', '×', '4', '5', '6', '-', '1', '2', '3', '+', '0', '.', '='];
+    const buttons = ['C', '±', '%', '÷', '7', '8', '9', 'x', '4', '5', '6', '-', '1', '2', '3', '+', '0', '.', '='];
 
     render(<Calculator />);
     buttons.forEach((buttonText) => {
-      const button = screen.getByText(buttonText);
-      expect(button).toBeInTheDocument();
+      // Look for elements with button tag that contain the text
+      const buttonElements = screen.getAllByText(buttonText, { selector: 'button' });
+      expect(buttonElements.length).toBeGreaterThan(0);
     });
   });
 
@@ -105,16 +106,71 @@ describe('Calculator', () => {
   });
 
   test('should multiply two numbers correctly', () => {
+    render(<Calculator />);
+    const button8 = screen.getByText('8');
+    fireEvent.click(button8);
+    const multiplyButton =  screen.getByText('x');
+    fireEvent.click(multiplyButton);
+    const button2 = screen.getByText('2');
+    fireEvent.click(button2);
 
+    const equalButton = screen.getByTestId('equalButton');
+    fireEvent.click(equalButton);
+
+    const display = screen.getByTestId('calcDisplay');
+
+    expect(display).toHaveTextContent('16');
   });
 
   test('should minus two numbers correctly', () => {
+    render(<Calculator />);
+    const button8 = screen.getByText('8');
+    fireEvent.click(button8);
+    const multiplyButton =  screen.getByText('-');
+    fireEvent.click(multiplyButton);
+    const button2 = screen.getByText('2');
+    fireEvent.click(button2);
+
+    const equalButton = screen.getByTestId('equalButton');
+    fireEvent.click(equalButton);
+
+    const display = screen.getByTestId('calcDisplay');
+
+    expect(display).toHaveTextContent('6');
   });
 
   test('should divide two numbers correctly', () => {
+    render(<Calculator />);
+    const button8 = screen.getByText('8');
+    fireEvent.click(button8);
+    const multiplyButton =  screen.getByText('÷');
+    fireEvent.click(multiplyButton);
+    const button2 = screen.getByText('2');
+    fireEvent.click(button2);
+
+    const equalButton = screen.getByTestId('equalButton');
+    fireEvent.click(equalButton);
+
+    const display = screen.getByTestId('calcDisplay');
+
+    expect(display).toHaveTextContent('4');
   });
 
   test('should add two numbers correctly', () => {
+    render(<Calculator />);
+    const button8 = screen.getByText('8');
+    fireEvent.click(button8);
+    const multiplyButton =  screen.getByText('+');
+    fireEvent.click(multiplyButton);
+    const button2 = screen.getByText('2');
+    fireEvent.click(button2);
+
+    const equalButton = screen.getByTestId('equalButton');
+    fireEvent.click(equalButton);
+
+    const display = screen.getByTestId('calcDisplay');
+
+    expect(display).toHaveTextContent('10');
   });
 
 });
