@@ -65,6 +65,22 @@ describe('Calculator', () => {
     expect(display).toHaveTextContent('7 * 2');
   });
 
+  test('should perform a calculation when pressing = button', () => {
+    render(<Calculator />);
+    const button8 = screen.getByText('8');
+    fireEvent.click(button8);
+    const multiplyButton =  screen.getByText('x');
+    fireEvent.click(multiplyButton);
+    const button2 = screen.getByText('2');
+    fireEvent.click(button2);
+
+    const equalButton = screen.getByTestId('equalButton');
+    fireEvent.click(equalButton);
+
+    const display = screen.getByTestId('calcDisplay');
+
+    expect(display).toHaveTextContent('16');
+  });
   test('should have a function to perform calculation', () => {
     render(<Calculator />);
 
@@ -86,23 +102,6 @@ describe('Calculator', () => {
     const display = screen.getByTestId('calcDisplay');
 
     expect(display).toHaveTextContent('16 *');
-  });
-
-  test('should perform a calculation when pressing = button', () => {
-    render(<Calculator />);
-    const button8 = screen.getByText('8');
-    fireEvent.click(button8);
-    const multiplyButton =  screen.getByText('x');
-    fireEvent.click(multiplyButton);
-    const button2 = screen.getByText('2');
-    fireEvent.click(button2);
-
-    const equalButton = screen.getByTestId('equalButton');
-    fireEvent.click(equalButton);
-
-    const display = screen.getByTestId('calcDisplay');
-
-    expect(display).toHaveTextContent('16');
   });
 
   test('should multiply two numbers correctly', () => {

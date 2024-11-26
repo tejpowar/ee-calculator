@@ -4,50 +4,50 @@ import {calculate} from "./helpers/calculate";
 
 function Calculator() {
 
-  const [display, setDisplay] = useState('0');
+  const [calculatorEntry, setCalculatorEntry] = useState('0');
   const [operator, setOperator] = useState('');
   const [firstOperand, setFirstOperand] = useState('');
   const [isOperatorPressed, setIsOperatorPressed] = useState(false);
   const [isPercentage, setIsPercentage] = useState(false);
 
   const handlePlusMinus = () => {
-    const parts = display.trim().split(' ');
+    const entry = calculatorEntry.trim().split(' ');
 
-    if (parts.length === 1) {
-        const currentNumber = parts[0];
-        setDisplay(currentNumber.startsWith('-')
+    if (entry.length === 1) {
+        const currentNumber = entry[0];
+        setCalculatorEntry(currentNumber.startsWith('-')
             ? currentNumber.slice(1)
             : `-${currentNumber}`);
-    } else if (parts.length === 3) {
-        const [firstPart, operator, secondPart] = parts;
+    } else if (entry.length === 3) {
+        const [firstNumber, operator, secondNumber] = entry;
 
-        if (secondPart) {
-            const newSecondPart = secondPart.startsWith('-')
-                ? secondPart.slice(1)
-                : `-${secondPart}`;
-            setDisplay(`${firstPart} ${operator} ${newSecondPart}`);
+        if (secondNumber) {
+            const newSecondNumber = secondNumber.startsWith('-')
+                ? secondNumber.slice(1)
+                : `-${secondNumber}`;
+            setCalculatorEntry(`${firstNumber} ${operator} ${newSecondNumber}`);
         }
     }
   }
 
   const handleNumberClick = (number: string) => {
       if (isOperatorPressed) {
-          setDisplay((prev) => `${prev}${number}`);
+          setCalculatorEntry((prev) => `${prev}${number}`);
           setIsOperatorPressed(false);
       } else {
-          setDisplay((prev) => (prev === '0' ? number : prev + number));
+          setCalculatorEntry((prev) => (prev === '0' ? number : prev + number));
       }
   }
 
   const handleOperatorClick  = (operatorInput: string) => {
       if (firstOperand && operator && !isOperatorPressed) {
-          const currentNumber = display.trim().split(' ')[2];
+          const currentNumber = calculatorEntry.trim().split(' ')[2];
           const result = calculate(firstOperand, currentNumber, operator);
-          setDisplay(`${result} ${operatorInput} `);
+          setCalculatorEntry(`${result} ${operatorInput} `);
           setFirstOperand(result.toString());
       } else if (!firstOperand) {
-          setFirstOperand(display);
-          setDisplay(`${display} ${operatorInput} `);
+          setFirstOperand(calculatorEntry);
+          setCalculatorEntry(`${calculatorEntry} ${operatorInput} `);
       }
 
       setOperator(operatorInput);
@@ -55,8 +55,8 @@ function Calculator() {
   }
 
   const handleEqualClick = () => {
-      if (firstOperand && operator && display) {
-          let currentNumber = display.trim().split(' ')[2];
+      if (firstOperand && operator && calculatorEntry) {
+          let currentNumber = calculatorEntry.trim().split(' ')[2];
 
           if (isPercentage) {
               currentNumber = currentNumber.replace('%', '');
@@ -64,7 +64,7 @@ function Calculator() {
           }
 
           const result = calculate(firstOperand, currentNumber, operator);
-          setDisplay(result.toString());
+          setCalculatorEntry(result.toString());
           setOperator('');
           setFirstOperand('');
           setIsOperatorPressed(false);
@@ -73,7 +73,7 @@ function Calculator() {
   }
 
   const clearCalculator = ()=> {
-      setDisplay('0');
+      setCalculatorEntry('0');
       setOperator('');
       setFirstOperand('');
       setIsOperatorPressed(false);
@@ -81,12 +81,12 @@ function Calculator() {
 
     const handlePercentageClick = () => {
         if (operator && !isPercentage) {
-            const currentPart = display.trim().split(' ');
+            const currentPart = calculatorEntry.trim().split(' ');
             if (currentPart.length === 3 && currentPart[2]) {
-                setDisplay(`${currentPart[0]} ${currentPart[1]} ${currentPart[2]}%`);
+                setCalculatorEntry(`${currentPart[0]} ${currentPart[1]} ${currentPart[2]}%`);
                 setIsPercentage(true);
             } else if (currentPart.length === 2) {
-                setDisplay(`${currentPart[0]} ${currentPart[1]} %`);
+                setCalculatorEntry(`${currentPart[0]} ${currentPart[1]} %`);
                 setIsPercentage(true);
             }
         }
@@ -99,7 +99,7 @@ function Calculator() {
           </div>
           <div data-testid="calcDisplay"
                className="bg-gray-200 text-gray-900 rounded-lg p-4 text-right text-xl font-mono mb-4">
-              {display}
+              {calculatorEntry}
           </div>
           <div className="grid grid-cols-4 gap-3">
               <button data-testid="clearButton" className="bg-gray-300 text-gray-800 rounded-lg py-3 text-lg font-medium" onClick={() => {clearCalculator();}}>C</button>

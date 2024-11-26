@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "EE Calculator",
+  "name": "EE Calculator",
   "icons": [
     {
       "src": "favicon.ico",
